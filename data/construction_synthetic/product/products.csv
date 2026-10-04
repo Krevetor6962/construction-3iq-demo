@@ -1,0 +1,13 @@
+product_id,product_family_id,product_name,package,gross_margin_pct,unit,unit_price,currency
+PROD-CON-01,FAMILY-INSULATION,Synthetic Wall Insulation A,wrapped panels,26.0,m2,20,EUR
+PROD-CON-02,FAMILY-INSULATION,Synthetic Loft Insulation B,wrapped rolls,27.0,m2,18,EUR
+PROD-CON-03,FAMILY-INSULATION,Synthetic Floor Insulation C,wrapped panels,28.0,m2,24,EUR
+PROD-CON-04,FAMILY-INSULATION,Synthetic Roof Insulation D,wrapped panels,29.0,m2,28,EUR
+PROD-CON-05,FAMILY-PLASTERBOARD,Synthetic Interior Board A,pallet,30.0,m2,12,EUR
+PROD-CON-06,FAMILY-PLASTERBOARD,Synthetic Interior Board B,pallet,31.0,m2,14,EUR
+PROD-CON-07,FAMILY-PLASTERBOARD,Synthetic Ceiling Board C,pallet,32.0,m2,16,EUR
+PROD-CON-08,FAMILY-PLASTERBOARD,Synthetic Partition Board D,pallet,33.0,m2,17,EUR
+PROD-CON-09,FAMILY-WINDOWS,Synthetic Window Assembly A,crate,34.0,unit,400,EUR
+PROD-CON-10,FAMILY-WINDOWS,Synthetic Window Assembly B,crate,35.0,unit,450,EUR
+PROD-CON-11,FAMILY-WINDOWS,Synthetic Window Assembly C,crate,36.0,unit,500,EUR
+PROD-CON-12,FAMILY-WINDOWS,Synthetic Window Assembly D,crate,37.0,unit,550,EUR

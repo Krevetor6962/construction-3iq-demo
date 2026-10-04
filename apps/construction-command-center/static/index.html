@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Construction Supply Command Center</title>
+<script>
+  (() => {
+    const param = new URLSearchParams(window.location.search).get("scoutTheme");
+    const theme =
+      param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    document.documentElement.setAttribute("data-theme", theme);
+  })();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cp-bg); color: var(--cp-text); font: 15px/1.5 "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; }
+header { background: var(--cp-surface); border-bottom: 1px solid var(--cp-border); padding: 24px 32px; }
+h1 { font-size: 26px; margin: 4px 0; font-weight: 650; }
+h2 { font-size: 19px; margin: 0 0 16px; }
+h3 { font-size: 16px; margin: 0 0 8px; }
+p { margin: 8px 0; }
+.eyebrow { font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--cp-accent); font-weight: 700; }
+.muted { color: var(--cp-text-muted); }
+.toolbar { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; margin-top: 16px; }
+button, select, textarea, input { font: inherit; border-radius: .625rem; }
+button { border: 1px solid var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); padding: 10px 16px; cursor: pointer; font-weight: 600; }
+button:hover { background: var(--cp-accent-hover); }
+button:disabled { opacity: .5; cursor: wait; }
+button.secondary { border-color: var(--cp-border); background: var(--cp-surface); color: var(--cp-text); }
+select, textarea, input { padding: 10px 12px; background: var(--cp-surface); color: var(--cp-text); border: 1px solid var(--cp-border-strong); }
+textarea { width: 100%; resize: vertical; min-height: 90px; margin: 8px 0 12px; }
+main { display: grid; grid-template-columns: 320px minmax(0,1fr); gap: 24px; padding: 24px 32px; max-width: 1600px; margin: auto; }
+.card { padding: 20px; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface); margin-bottom: 20px; }
+.queue-heading { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.queue-heading h2 { margin: 0; }
+.query-info { flex: none; }
+.query-info-button { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 1px solid var(--cp-border-strong); border-radius: 50%; background: var(--cp-surface); color: var(--cp-text-muted); }
+.query-info-button:hover { background: var(--cp-accent-soft); color: var(--cp-accent); }
+.query-info-button:focus-visible { outline: 2px solid var(--cp-accent); outline-offset: 3px; }
+.query-tooltip { position: fixed; z-index: 20; width: min(640px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow-y: auto; padding: 16px; border: 1px solid var(--cp-border-strong); border-radius: .625rem; background: var(--cp-surface); color: var(--cp-text); }
+.query-tooltip p { font-size: 13px; }
+.query-tooltip pre { max-height: 280px; margin-bottom: 0; user-select: text; }
+.query-tooltip pre:focus-visible { outline: 2px solid var(--cp-accent); }
+.queue { max-height: 780px; overflow-y: auto; padding: 4px; }
+.queue button { text-align: left; width: 100%; margin-bottom: 8px; padding: 12px; border: 1px solid var(--cp-border); background: var(--cp-surface); color: var(--cp-text); font-weight: 400; }
+.queue button.selected { border-color: var(--cp-accent); background: var(--cp-accent-soft); }
+.queue strong, .queue small { display: block; }
+.queue small { color: var(--cp-text-muted); margin-top: 4px; }
+.badge { display: inline-block; border-radius: .625rem; padding: 4px 8px; font-size: 12px; border: 1px solid var(--cp-border); background: var(--cp-surface-soft); }
+.notice { background: var(--cp-accent-soft); border-left: 4px solid var(--cp-accent); padding: 12px 16px; }
+.error { color: var(--cp-danger); border-color: var(--cp-danger); }
+.metrics { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 20px; }
+.metric { border: 1px solid var(--cp-border); background: var(--cp-surface-soft); border-radius: .625rem; padding: 12px; }
+.metric strong { font-size: 23px; display: block; }
+.metric span { color: var(--cp-text-muted); font-size: 12px; }
+.lanes { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+.lane { border: 1px solid var(--cp-border); border-radius: .625rem; padding: 16px; overflow-wrap: anywhere; }
+.lane p { white-space: pre-wrap; }
+pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 400px; overflow-y: auto; font: 12px/1.5 Consolas, "Courier New", Courier, monospace; background: var(--cp-surface-soft); padding: 12px; border-radius: .625rem; }
+summary { color: var(--cp-link); cursor: pointer; padding: 8px 0; }
+table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+td, th { border-bottom: 1px solid var(--cp-border); text-align: left; padding: 10px 8px; }
+.steps { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.completed { color: var(--cp-success); }
+.failed, .partial { color: var(--cp-danger); }
+.answer { white-space: pre-wrap; }
+.chat-row { display: flex; gap: 12px; }
+.chat-row input { flex: 1; min-width: 0; }
+.chat-message { padding: 12px; margin-top: 12px; border-radius: .625rem; background: var(--cp-surface-soft); white-space: pre-wrap; }
+[hidden] { display: none !important; }
+@media(max-width:1000px) { main { grid-template-columns: 260px minmax(0,1fr); padding: 16px; gap: 16px; } .lanes { grid-template-columns: 1fr; } .metrics { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:700px) { main { display: block; } .queue { max-height: 260px; } header { padding: 20px; } .chat-row { flex-wrap: wrap; } }
+</style>
+<script src="app.js" defer></script>
+</head>
+<body>
+<header>
+  <div class="eyebrow" id="supplier">Construction-material supplier</div>
+  <h1 id="title">Construction Supply Command Center</h1>
+  <p class="muted">Not enough stock for every order. Make the next decision with facts, policy, and people.</p>
+  <div class="toolbar">
+    <label for="mode">Evidence mode</label>
+    <select id="mode"><option value="live">Live Fabric + Foundry</option><option value="offline">Offline synthetic demo (no cloud calls)</option></select>
+    <button class="secondary" id="refresh">Refresh queue</button>
+    <span id="health" class="badge">Checking configuration</span>
+    <span id="asof" class="badge"></span>
+    <span id="fabric-mode" class="badge"></span>
+  </div>
+</header>
+<main>
+  <aside>
+    <div class="card">
+      <div class="queue-heading">
+        <h2>Customer commitments</h2>
+        <div class="query-info" id="queue-query-info">
+          <button id="queue-query-button" class="query-info-button" type="button" aria-label="Show customer commitments query" aria-expanded="false" aria-controls="queue-query-tooltip" aria-describedby="queue-query-description">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 7v5" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="4.5" r="1" fill="currentColor"/></svg>
+          </button>
+          <div id="queue-query-tooltip" class="query-tooltip" role="region" aria-labelledby="queue-query-title" hidden>
+            <strong id="queue-query-title">Customer commitments source</strong>
+            <p id="queue-query-description" class="muted">The query will be available once the list has loaded.</p>
+            <pre id="queue-query-text" tabindex="0" aria-label="Executed GQL query" hidden></pre>
+          </div>
+        </div>
+      </div>
+      <p class="muted" id="queue-source">Select a commitment to compare its shared stock pool.</p>
+      <div id="queue" class="queue" aria-label="Customer commitments"></div>
+    </div>
+    <div class="notice">All business data is synthetic. Work IQ collaboration is simulated, not connected to Microsoft 365. No actions are sent or executed.</div>
+  </aside>
+  <section>
+    <div id="error" class="card error" role="alert" hidden></div>
+    <div class="card">
+      <div class="eyebrow">The business question</div>
+      <h2 id="selected-title">Choose a customer commitment</h2>
+      <label for="question">What should the team do?</label>
+      <textarea id="question" maxlength="4000">Which customer commitments should we protect first, and what should sales, supply, and marketing do next?</textarea>
+      <button id="run" disabled>Build an evidence-backed proposal</button>
+      <div class="steps" id="progress" aria-live="polite"></div>
+    </div>
+    <div id="result" hidden>
+      <div class="card">
+        <div class="toolbar"><h2>Shared-stock impact</h2><span class="badge">Calculated facts, not estimated savings</span></div>
+        <div class="metrics" id="metrics"></div>
+        <div id="recommendation" class="answer"></div>
+        <div id="allocation"></div>
+        <div id="next-steps"></div>
+        <details><summary>Customer communication draft - not sent</summary><pre id="draft"></pre></details>
+      </div>
+      <div class="card">
+        <h2>Three evidence lanes</h2>
+        <div class="lanes" id="lanes"></div>
+      </div>
+      <div class="card">
+        <h2>Ask a follow-up</h2>
+        <p class="muted">Uses this run's evidence. Start a new run to investigate a different stock pool.</p>
+        <div class="chat-row"><input id="followup" maxlength="4000" aria-label="Follow-up question" placeholder="Draft a customer-safe email that does not overpromise"><button id="ask">Ask</button></div>
+        <div id="chat" aria-live="polite"></div>
+      </div>
+      <div class="card"><details><summary>Technical proof: sources, tool calls, and Agent Framework trace</summary><pre id="trace"></pre></details></div>
+    </div>
+  </section>
+</main>
+</body>
+</html>

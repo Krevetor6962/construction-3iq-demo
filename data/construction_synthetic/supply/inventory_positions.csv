@@ -1,0 +1,13 @@
+inventory_position_id,product_id,site,snapshot_date,available_qty,reserved_qty,cluster_id,unit,inbound_delivery_id,inbound_qty,inbound_date,inbound_confirmed
+INV-CON-01,PROD-CON-01,Synthetic Central Depot,2026-10-02,1200,45,POOL-CON-01,m2,,0,,false
+INV-CON-02,PROD-CON-02,Synthetic Central Depot,2026-10-02,500,50,POOL-CON-02,m2,,0,,false
+INV-CON-03,PROD-CON-03,Synthetic Central Depot,2026-10-02,5115,55,POOL-CON-03,m2,,0,,false
+INV-CON-04,PROD-CON-04,Synthetic Central Depot,2026-10-02,4998,60,POOL-CON-04,m2,,0,,false
+INV-CON-05,PROD-CON-05,Synthetic Central Depot,2026-10-02,750,65,POOL-CON-05,m2,,0,,false
+INV-CON-06,PROD-CON-06,Synthetic Central Depot,2026-10-02,4030,70,POOL-CON-06,m2,,0,,false
+INV-CON-07,PROD-CON-07,Synthetic Central Depot,2026-10-02,5258,75,POOL-CON-07,m2,,0,,false
+INV-CON-08,PROD-CON-08,Synthetic Central Depot,2026-10-02,4335,80,POOL-CON-08,m2,,0,,false
+INV-CON-09,PROD-CON-09,Synthetic Central Depot,2026-10-02,40,85,POOL-CON-09,unit,INBOUND-CON-09,35,2026-10-12,true
+INV-CON-10,PROD-CON-10,Synthetic Central Depot,2026-10-02,378,90,POOL-CON-10,unit,,0,,false
+INV-CON-11,PROD-CON-11,Synthetic Central Depot,2026-10-02,432,95,POOL-CON-11,unit,,0,,false
+INV-CON-12,PROD-CON-12,Synthetic Central Depot,2026-10-02,420,100,POOL-CON-12,unit,,0,,false

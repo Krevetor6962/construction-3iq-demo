@@ -1,0 +1,2 @@
+destination_id,destination_name,channel,platform
+DEST-CON-SIMULATED,Synthetic draft-only email destination,email,synthetic_no_external_delivery

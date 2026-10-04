@@ -1,0 +1,2 @@
+data_source_id,source_system,source_type,domain,owner
+SOURCE-CON-SYNTHETIC,construction_fixture_generator,synthetic,construction_demand_to_supply,synthetic.data.steward@example.com

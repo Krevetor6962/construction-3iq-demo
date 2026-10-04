@@ -1,0 +1,115 @@
+{
+  "purpose": "Question/query pairs to add manually to the corresponding Fabric data-agent source. These are read-only source examples, not a data-agent item definition.",
+  "workspaceId": "<YOUR_WORKSPACE_ID>",
+  "snapshotDate": "2026-10-02",
+  "examples": [
+    {
+      "id": "K1",
+      "source": "events",
+      "language": "KQL",
+      "question": "In the demo observation window from 30 September through 2 October 2026 UTC, what demand signal was recorded for campaign CAMPAIGN-CON-001? Is it confirmed or eligible for allocation?",
+      "query": "demand_signals\n| where event_time >= datetime(2026-09-30) and event_time < datetime(2026-10-03)\n| where campaign_id == \"CAMPAIGN-CON-001\"\n| project event_time, demand_signal_id, campaign_id, account_id, product_id, demand_qty, unit, confirmed, allocation_eligible\n| order by event_time asc\n| take 25",
+      "expectedRowCount": 1,
+      "mustExplain": "300 m2 of unconfirmed, allocation-ineligible interest is not an order and does not consume stock."
+    },
+    {
+      "id": "G1",
+      "source": "graph",
+      "language": "GQL",
+      "question": "Follow campaign CAMPAIGN-CON-001 through its demand signal, material and supply constraint to every exposed commitment, its customer and business risk. Who shares the shortage?",
+      "query": "MATCH (c:`Campaign`)-[:`generates_demand_signal`]->(ds:`DemandSignal`)-[:`requests_product`]->(p:`Product`)-[:`has_constraint`]->(sc:`SupplyConstraint`)-[:`exposes_commitment`]->(cc:`CustomerCommitment`)\nWHERE c.`campaign_id` = 'CAMPAIGN-CON-001'\nMATCH (so:`SalesOrder`)-[:`fulfills_commitment`]->(cc)\nMATCH (so)-[:`ordered_by`]->(a:`Account`)\nMATCH (cc)-[:`has_business_risk`]->(br:`BusinessRisk`)\nWHERE br.`constraint_id` = sc.`constraint_id`\nRETURN DISTINCT ds.`demand_signal_id` AS demandSignalId, p.`product_id` AS productId, sc.`constraint_id` AS constraintId, cc.`record_id` AS recordId, cc.`commitment_id` AS commitmentId, a.`account_name` AS accountName, cc.`project_name` AS projectName, so.`order_qty` AS orderedQty, cc.`allocated_qty` AS proposedQty, cc.`shortage_qty` AS shortageQty, br.`unfilled_value` AS unfilledValue, br.`currency` AS currency\nORDER BY recordId\nLIMIT 25",
+      "expectedRowCount": 3,
+      "mustExplain": "This is a dependency path, not proof that the campaign caused the pre-existing shortage. Alder, Birch and Cedar share the product/constraint; two have unfilled quantities."
+    },
+    {
+      "id": "S1",
+      "source": "lakehouse",
+      "language": "T-SQL",
+      "question": "For POOL-CON-01, reconcile confirmed order quantities, the proposed allocation, current shortage, free stock, order value and unfilled order value. Count the stock pool once.",
+      "query": "WITH commitment_totals AS (\n    SELECT cc.cluster_id, so.product_id, so.unit, so.currency,\n           COUNT(*) AS commitment_count,\n           SUM(so.order_qty) AS ordered_qty,\n           SUM(cc.allocated_qty) AS proposed_qty,\n           SUM(cc.shortage_qty) AS shortage_qty,\n           SUM(so.order_value) AS order_value,\n           SUM(cc.shortage_qty * so.unit_price) AS unfilled_value\n    FROM dbo.customer_commitments AS cc\n    INNER JOIN dbo.sales_orders AS so ON so.order_id = cc.order_id\n    WHERE cc.cluster_id = 'POOL-CON-01'\n    GROUP BY cc.cluster_id, so.product_id, so.unit, so.currency\n)\nSELECT t.cluster_id, t.product_id, t.commitment_count, t.ordered_qty,\n       i.available_qty AS free_stock, t.proposed_qty, t.shortage_qty,\n       t.order_value, t.unfilled_value, t.unit, t.currency, i.snapshot_date\nFROM commitment_totals AS t\nINNER JOIN dbo.inventory_positions AS i\n  ON i.cluster_id = t.cluster_id AND i.product_id = t.product_id AND i.unit = t.unit;",
+      "expectedRowCount": 1,
+      "mustExplain": "1,800 m2 ordered, 1,200 free, 1,200 proposed, 600 short, EUR 36,000 order value and EUR 12,000 unfilled. available_qty is already net of reservations."
+    },
+    {
+      "id": "G2",
+      "source": "graph",
+      "language": "GQL",
+      "question": "Starting from PROFILE-CON-001, traverse audience, activation, campaign, demand signal, product, constraint, commitment and order to find OTHER customer accounts exposed to the same constrained material. Show the intermediate IDs.",
+      "query": "MATCH (up:`UnifiedProfile`)-[:`member_of_audience`]->(aud:`Audience`)-[:`activated_through`]->(act:`Activation`)-[:`supports_campaign`]->(c:`Campaign`)-[:`generates_demand_signal`]->(ds:`DemandSignal`)-[:`requests_product`]->(p:`Product`)-[:`has_constraint`]->(sc:`SupplyConstraint`)-[:`exposes_commitment`]->(cc:`CustomerCommitment`)<-[:`fulfills_commitment`]-(so:`SalesOrder`)-[:`ordered_by`]->(other:`Account`)\nWHERE up.`profile_id` = 'PROFILE-CON-001' AND other.`account_id` <> up.`account_id`\nRETURN DISTINCT up.`profile_id` AS startingProfile, aud.`audience_id` AS audienceId, act.`activation_id` AS activationId, c.`campaign_id` AS campaignId, ds.`demand_signal_id` AS demandSignalId, p.`product_id` AS productId, sc.`constraint_id` AS constraintId, cc.`commitment_id` AS commitmentId, so.`order_id` AS orderId, other.`account_id` AS otherAccountId, other.`account_name` AS otherAccountName, cc.`shortage_qty` AS shortageQty\nORDER BY otherAccountId\nLIMIT 25",
+      "expectedRowCount": 2,
+      "mustExplain": "This explicit nine-edge path reaches Birch and Cedar, not just the starting account. Traverse exact product/constraint edges, not every product in the insulation family."
+    },
+    {
+      "id": "K2",
+      "source": "events",
+      "language": "KQL",
+      "question": "Show the observed catalogue activity, journey state and activation outcome for PROFILE-CON-001 from 30 September through 2 October 2026 UTC. Do the timestamps prove an order or a sent email?",
+      "query": "let start_time = datetime(2026-09-30);\nlet end_time = datetime(2026-10-03);\nunion\n(behavioral_events\n | where event_time >= start_time and event_time < end_time and profile_id == \"PROFILE-CON-001\"\n | project event_time, event_kind=\"behavior\", event_id=behavioral_event_id, profile_id, related_id=campaign_id, observed_status=event_type),\n(journey_events\n | where event_time >= start_time and event_time < end_time and profile_id == \"PROFILE-CON-001\"\n | project event_time, event_kind=\"journey\", event_id=journey_event_id, profile_id, related_id=campaign_id, observed_status=event_status),\n(activation_events\n | where event_time >= start_time and event_time < end_time and profile_id == \"PROFILE-CON-001\"\n | project event_time, event_kind=\"activation\", event_id=activation_event_id, profile_id, related_id=activation_id, observed_status=event_status)\n| order by event_time asc, event_kind asc\n| take 25",
+      "expectedRowCount": 3,
+      "mustExplain": "A catalogue view is followed in date by awaiting_supply_review and suppressed events. The latter two share a timestamp, so their causal order is not established. None is a conversion or send event."
+    },
+    {
+      "id": "K3",
+      "source": "events",
+      "language": "KQL",
+      "question": "For 30 September through 2 October 2026 UTC, how many activation events were logged, how many were suppressed, and how many were marked sent? Do these events alone tell us whether consent or supply caused the block?",
+      "query": "activation_events\n| where event_time >= datetime(2026-09-30) and event_time < datetime(2026-10-03)\n| summarize event_count=count(), suppressed_events=countif(event_status == \"suppressed\"), sent_events=countif(event_status == \"sent\"), first_event=min(event_time), last_event=max(event_time)",
+      "expectedRowCount": 1,
+      "mustExplain": "100 suppressed, zero marked sent in this fixture/window. Event status alone does not distinguish consent from supply. Join the returned identifiers to current structured context in a separate source query."
+    },
+    {
+      "id": "S2",
+      "source": "lakehouse",
+      "language": "T-SQL",
+      "question": "Classify the current activation/profile pairs by activation status and email construction-marketing consent. Keep this current snapshot separate from the historical event count.",
+      "query": "WITH pairs AS (\n    SELECT DISTINCT a.activation_id, m.profile_id, a.activation_status, cr.consent_status\n    FROM dbo.activations AS a\n    INNER JOIN dbo.audience_memberships AS m ON m.audience_id = a.audience_id\n    INNER JOIN dbo.consent_records AS cr ON cr.profile_id = m.profile_id AND cr.channel = a.channel\n    WHERE cr.channel = 'email' AND cr.purpose = 'construction_marketing'\n)\nSELECT activation_status, consent_status, COUNT(*) AS activation_profile_pairs\nFROM pairs\nGROUP BY activation_status, consent_status\nORDER BY activation_status, consent_status;",
+      "expectedRowCount": 2,
+      "mustExplain": "90 held_supply/granted pairs and 10 suppressed_consent/denied pairs are current snapshot classifications, not a causal breakdown directly present in the KQL events."
+    },
+    {
+      "id": "G3",
+      "source": "graph",
+      "language": "GQL",
+      "question": "Trace ACTIVATION-EVENT-CON-010 to its activation, profile, marketing consent, account and commitment REC-CON-0010. Is this a customer whose stock proposal is fully covered but whose marketing consent is denied?",
+      "query": "MATCH (ev:`ActivationEvent`)-[:`event_for_activation`]->(act:`Activation`)\nWHERE ev.`activation_event_id` = 'ACTIVATION-EVENT-CON-010'\nMATCH (ev)-[:`event_for_profile`]->(up:`UnifiedProfile`)-[:`has_consent`]->(cr:`ConsentRecord`)\nMATCH (up)-[:`associated_with_account`]->(a:`Account`)<-[:`ordered_by`]-(so:`SalesOrder`)-[:`fulfills_commitment`]->(cc:`CustomerCommitment`)\nMATCH (ev)-[:`blocked_by`]->(rule:`SuppressionRule`)\nWHERE cc.`record_id` = 'REC-CON-0010' AND cr.`channel` = 'email' AND cr.`purpose` = 'construction_marketing'\nRETURN DISTINCT ev.`activation_event_id` AS eventId, ev.`event_status` AS loggedStatus, act.`activation_status` AS currentActivationStatus, up.`profile_id` AS profileId, cr.`consent_id` AS consentId, cr.`consent_status` AS consentStatus, rule.`suppression_rule_id` AS ruleId, a.`account_name` AS accountName, cc.`record_id` AS recordId, so.`order_qty` AS orderedQty, cc.`allocated_qty` AS proposedQty, cc.`shortage_qty` AS shortageQty, cc.`approval_required` AS approvalRequired\nLIMIT 25",
+      "expectedRowCount": 1,
+      "mustExplain": "Juniper's 350 m2 proposal has zero shortage, but construction-marketing email consent is denied and the activation is suppressed_consent. Stock coverage does not grant consent or authorize outreach."
+    },
+    {
+      "id": "S3",
+      "source": "lakehouse",
+      "language": "T-SQL",
+      "question": "Hypothetical only: if the 300 m2 of campaign interest became an additional confirmed order against unchanged POOL-CON-01 stock, what would the quantity gap be? Do not change any records or proposed allocations.",
+      "query": "WITH pool AS (\n    SELECT cc.cluster_id, so.product_id, so.unit, SUM(so.order_qty) AS current_ordered_qty\n    FROM dbo.customer_commitments AS cc\n    INNER JOIN dbo.sales_orders AS so ON so.order_id = cc.order_id\n    WHERE cc.cluster_id = 'POOL-CON-01'\n    GROUP BY cc.cluster_id, so.product_id, so.unit\n)\nSELECT p.cluster_id, p.unit, p.current_ordered_qty, i.available_qty AS unchanged_free_stock,\n       300 AS hypothetical_extra_qty, p.current_ordered_qty + 300 AS hypothetical_total_qty,\n       CASE WHEN p.current_ordered_qty + 300 > i.available_qty\n            THEN p.current_ordered_qty + 300 - i.available_qty ELSE 0 END AS hypothetical_gap\nFROM pool AS p\nINNER JOIN dbo.inventory_positions AS i\n  ON i.cluster_id = p.cluster_id AND i.product_id = p.product_id AND i.unit = p.unit;",
+      "expectedRowCount": 1,
+      "mustExplain": "The hypothetical gap would be 900 m2 (2,100 requested against 1,200 free), not today's actual 600 m2 shortage. The extra 300 is a stated scenario assumption, not an allocation or forecast."
+    },
+    {
+      "id": "G4",
+      "source": "graph",
+      "language": "GQL",
+      "question": "For candidate material PROD-CON-06, traverse its own supply constraint to its existing customer commitments and accounts. Which customers already compete for that material? Show its stock pool as context.",
+      "query": "MATCH (p:`Product`)-[:`has_constraint`]->(sc:`SupplyConstraint`)-[:`exposes_commitment`]->(cc:`CustomerCommitment`)<-[:`fulfills_commitment`]-(so:`SalesOrder`)-[:`ordered_by`]->(a:`Account`)\nWHERE p.`product_id` = 'PROD-CON-06'\nMATCH (ip:`InventoryPosition`)-[:`stocks_product`]->(p)\nWHERE ip.`cluster_id` = cc.`cluster_id`\nRETURN DISTINCT ip.`inventory_position_id` AS inventoryId, ip.`available_qty` AS sharedFreeStock, ip.`unit` AS `unit`, sc.`constraint_id` AS constraintId, cc.`commitment_id` AS commitmentId, a.`account_name` AS accountName, cc.`project_name` AS projectName, so.`order_qty` AS orderedQty, cc.`allocated_qty` AS proposedQty, cc.`shortage_qty` AS shortageQty\nORDER BY commitmentId\nLIMIT 25",
+      "expectedRowCount": 24,
+      "mustExplain": "Candidate eligibility is only a property on the original commitment, not a substitutes_for graph edge. This query investigates the candidate's separate stock/commitments; it does not approve a substitution or create free capacity."
+    },
+    {
+      "id": "S4",
+      "source": "lakehouse",
+      "language": "T-SQL",
+      "question": "For REC-CON-0005, show the proposed candidate and qualification status, then reconcile the candidate PROD-CON-06's own existing commitments and stock. Is that material spare stock we can promise?",
+      "query": "WITH candidate_load AS (\n    SELECT cc.cluster_id, so.product_id, so.unit, so.currency, COUNT(*) AS existing_commitments,\n           SUM(so.order_qty) AS candidate_ordered_qty, SUM(cc.allocated_qty) AS candidate_proposed_qty,\n           SUM(cc.shortage_qty) AS candidate_shortage_qty\n    FROM dbo.customer_commitments AS cc\n    INNER JOIN dbo.sales_orders AS so ON so.order_id = cc.order_id\n    WHERE so.product_id = 'PROD-CON-06'\n    GROUP BY cc.cluster_id, so.product_id, so.unit, so.currency\n)\nSELECT origin.record_id, origin.substitution_allowed, origin.substitute_product_id,\n       origin.qualification_status, origin.approval_required,\n       l.cluster_id AS candidate_pool, l.existing_commitments, l.candidate_ordered_qty,\n       i.available_qty AS candidate_free_stock, l.candidate_proposed_qty, l.candidate_shortage_qty, l.unit\nFROM dbo.customer_commitments AS origin\nINNER JOIN candidate_load AS l ON l.product_id = origin.substitute_product_id\nINNER JOIN dbo.inventory_positions AS i\n  ON i.cluster_id = l.cluster_id AND i.product_id = l.product_id AND i.unit = l.unit\nWHERE origin.record_id = 'REC-CON-0005';",
+      "expectedRowCount": 1,
+      "mustExplain": "substitution_allowed permits review only; human_review_required and approval_required are still present. The candidate's free-stock balance is not spare stock after its existing proposed allocations."
+    },
+    {
+      "id": "G5",
+      "source": "graph",
+      "language": "GQL",
+      "question": "Starting from REC-CON-0008, follow the shared inventory relationship to all other window commitments. How is the single inbound shipment split, and which commitments does its date fail to meet?",
+      "query": "MATCH (selected:`DemandRecord`)-[:`from_inventory`]->(ip:`InventoryPosition`)<-[:`from_inventory`]-(peer:`DemandRecord`)\nWHERE selected.`record_id` = 'REC-CON-0008'\nRETURN DISTINCT peer.`record_id` AS recordId, peer.`account_name` AS accountName, peer.`committed_date` AS committedDate, peer.`shortage_qty` AS currentShortage, ip.`inbound_delivery_id` AS inboundId, ip.`inbound_qty` AS sharedInboundQty, ip.`inbound_date` AS inboundDate, ip.`inbound_confirmed` AS inboundConfirmed, peer.`planned_inbound_qty` AS plannedShare, peer.`after_inbound_shortage_qty` AS afterInboundShortage, peer.`inbound_meets_commitment` AS inboundMeetsCommitment, peer.`approval_required` AS approvalRequired\nORDER BY recordId\nLIMIT 25",
+      "expectedRowCount": 3,
+      "mustExplain": "One 35-unit inbound is split 0/15/20. The apartment's 15-unit share arrives after its commitment; the office's 20-unit share can cover its later date, subject to receipt and approval. A false flag on the already-covered school row does not mean its current allocation is late."
+    }
+  ]
+}

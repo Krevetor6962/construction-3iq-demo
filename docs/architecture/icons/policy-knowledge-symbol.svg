@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <title>Cited policy knowledge (illustrative symbol)</title>
+  <path d="M5 10c10-4 18-2 27 4 9-6 17-8 27-4v39c-10-4-18-2-27 4-9-6-17-8-27-4Z" fill="#D7C0FA" stroke="#6D28D9" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M32 14v38M12 22l12 3M12 31l12 3M40 25l11-3M40 34l11-3" stroke="#6D28D9" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="49" cy="48" r="11" fill="#F4EAFD" stroke="#6D28D9" stroke-width="3"/>
+  <path d="m44 48 3 3 7-8" fill="none" stroke="#107C10" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

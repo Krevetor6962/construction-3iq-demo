@@ -1,0 +1,73 @@
+{
+  "verifiedAt": "2026-10-03T16:15:49.341177+00:00",
+  "sourceId": "<KQL_DATABASE_NAME>",
+  "validationScope": "Direct live KQL execution; no data-agent item was created or invoked",
+  "results": [
+    {
+      "id": "K1",
+      "language": "KQL",
+      "status": "passed",
+      "rowCount": 1,
+      "rows": [
+        {
+          "event_time": "2026-10-01T11:59:00Z",
+          "demand_signal_id": "DEMAND-CON-001",
+          "campaign_id": "CAMPAIGN-CON-001",
+          "account_id": "ACC-CON-001",
+          "product_id": "PROD-CON-01",
+          "demand_qty": 300,
+          "unit": "m2",
+          "confirmed": false,
+          "allocation_eligible": false
+        }
+      ]
+    },
+    {
+      "id": "K2",
+      "language": "KQL",
+      "status": "passed",
+      "rowCount": 3,
+      "rows": [
+        {
+          "event_time": "2026-09-30T11:59:00Z",
+          "event_kind": "behavior",
+          "event_id": "BEHAVIOR-CON-001",
+          "profile_id": "PROFILE-CON-001",
+          "related_id": "CAMPAIGN-CON-001",
+          "observed_status": "synthetic_catalogue_view"
+        },
+        {
+          "event_time": "2026-10-01T11:59:00Z",
+          "event_kind": "activation",
+          "event_id": "ACTIVATION-EVENT-CON-001",
+          "profile_id": "PROFILE-CON-001",
+          "related_id": "ACTIVATION-CON-001",
+          "observed_status": "suppressed"
+        },
+        {
+          "event_time": "2026-10-01T11:59:00Z",
+          "event_kind": "journey",
+          "event_id": "JOURNEY-EVENT-CON-001",
+          "profile_id": "PROFILE-CON-001",
+          "related_id": "CAMPAIGN-CON-001",
+          "observed_status": "awaiting_supply_review"
+        }
+      ]
+    },
+    {
+      "id": "K3",
+      "language": "KQL",
+      "status": "passed",
+      "rowCount": 1,
+      "rows": [
+        {
+          "event_count": 100,
+          "suppressed_events": 100,
+          "sent_events": 0,
+          "first_event": "2026-10-01T10:20:00Z",
+          "last_event": "2026-10-01T11:59:00Z"
+        }
+      ]
+    }
+  ]
+}

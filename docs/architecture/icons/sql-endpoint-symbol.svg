@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <title>SQL analytics endpoint (illustrative symbol, not a SQL Database item)</title>
+  <rect x="4" y="8" width="56" height="48" rx="7" fill="#D5F5E9" stroke="#087F6E" stroke-width="3"/>
+  <path d="M5 22h54" stroke="#087F6E" stroke-width="3"/>
+  <circle cx="12" cy="15" r="2" fill="#087F6E"/>
+  <circle cx="19" cy="15" r="2" fill="#087F6E"/>
+  <text x="32" y="43" text-anchor="middle" fill="#000000" font-family="Arial,Helvetica,sans-serif" font-size="19" font-weight="700">SQL</text>
+</svg>

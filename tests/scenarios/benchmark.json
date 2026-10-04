@@ -1,0 +1,218 @@
+[
+  {
+    "id": "golden-school-allocation",
+    "recordId": "REC-CON-0001",
+    "question": "How much insulation can we propose for the school?",
+    "expectedIntents": ["allocation"],
+    "expectedFacts": {"orderedQty": 800, "allocatedQty": 800, "shortageQty": 0, "unit": "m2", "approvalRequired": true},
+    "policyIds": ["allocation"]
+  },
+  {
+    "id": "golden-apartments-shortage",
+    "recordId": "REC-CON-0002",
+    "question": "What remains unfilled for the apartments?",
+    "expectedIntents": ["allocation", "exposure"],
+    "expectedFacts": {"orderedQty": 600, "allocatedQty": 400, "shortageQty": 200, "unfilledValue": 4000, "currency": "EUR"},
+    "policyIds": ["allocation"]
+  },
+  {
+    "id": "golden-office-shortage",
+    "recordId": "REC-CON-0003",
+    "question": "Can the office receive all 400 square metres?",
+    "expectedIntents": ["allocation", "escalation"],
+    "expectedFacts": {"orderedQty": 400, "allocatedQty": 0, "shortageQty": 400, "unfilledValue": 8000, "informalPromiseConflict": true},
+    "policyIds": ["allocation", "escalation"]
+  },
+  {
+    "id": "golden-shared-pool-arithmetic",
+    "recordId": "REC-CON-0001",
+    "question": "Reconcile the insulation pool demand, free stock, allocation and shortage.",
+    "expectedIntents": ["allocation", "arbitration"],
+    "expectedFacts": {"pool.orderedQty": 1800, "pool.availableQty": 1200, "pool.allocatedQty": 1200, "pool.shortageQty": 600},
+    "policyIds": ["allocation", "arbitration"]
+  },
+  {
+    "id": "golden-unfilled-value",
+    "recordId": "REC-CON-0002",
+    "question": "What is total order value versus unfilled order value for this pool?",
+    "expectedIntents": ["exposure", "arbitration"],
+    "expectedFacts": {"pool.orderValue": 36000, "pool.unfilledValue": 12000, "unitPrice": 20, "currency": "EUR"},
+    "policyIds": ["allocation", "arbitration"]
+  },
+  {
+    "id": "priority-not-value",
+    "recordId": "REC-CON-0001",
+    "question": "Why protect the school rather than ranking only by order value?",
+    "expectedIntents": ["priority", "milestones"],
+    "expectedFacts": {"priority": "contractual", "allocationRank": 1, "milestoneName": "Insulation installation", "committedDateOffsetDays": 3, "milestoneDateOffsetDays": 4},
+    "requiredTerms": ["contractual", "earliest committed delivery date", "Do not rank solely by order value"],
+    "policyIds": ["priority"]
+  },
+  {
+    "id": "cross-customer-count",
+    "recordId": "REC-CON-0003",
+    "question": "How many customers participate and how many have a shortage?",
+    "expectedIntents": ["arbitration"],
+    "expectedFacts": {"pool.customerCount": 3, "pool.impactedCustomerCount": 2},
+    "policyIds": ["arbitration"]
+  },
+  {
+    "id": "stock-net-reservations",
+    "recordId": "REC-CON-0001",
+    "question": "Should reservations be subtracted from the 1,200 square metres again?",
+    "expectedIntents": ["allocation", "audit"],
+    "expectedFacts": {"availableQty": 1200},
+    "requiredTerms": ["already net of other reservations", "Do not subtract reserved stock again"],
+    "policyIds": ["allocation"]
+  },
+  {
+    "id": "campaign-opportunity",
+    "recordId": "REC-CON-0001",
+    "question": "Does the 300-square-metre school campaign opportunity consume stock?",
+    "expectedIntents": ["campaigns", "allocation"],
+    "expectedFacts": {"campaign.demand_qty": 300, "campaign.confirmed": false, "campaign.allocation_eligible": false, "pool.orderedQty": 1800},
+    "requiredTerms": ["unconfirmed interest", "outside stock allocation"],
+    "policyIds": ["campaigns"]
+  },
+  {
+    "id": "campaign-throttle",
+    "recordId": "REC-CON-0002",
+    "question": "Should we activate more insulation demand while supply is constrained?",
+    "expectedIntents": ["campaigns"],
+    "requiredTerms": ["Hold constrained-product activations", "Consent is required", "no campaign is activated"],
+    "policyIds": ["campaigns"]
+  },
+  {
+    "id": "candidate-human-qualification",
+    "recordId": "REC-CON-0005",
+    "question": "Can we offer the candidate board to the apartment project immediately?",
+    "expectedIntents": ["substitution"],
+    "expectedFacts": {"substitutionAllowed": true, "substituteProductId": "PROD-CON-06", "qualificationStatus": "human_review_required", "allocatedQty": 250, "shortageQty": 150},
+    "requiredTerms": ["human qualification", "not engineering approval", "customer acceptance"],
+    "policyIds": ["substitution"]
+  },
+  {
+    "id": "substitution-not-allowed",
+    "recordId": "REC-CON-0004",
+    "question": "Is substitution permitted for the community hall commitment?",
+    "expectedIntents": ["substitution"],
+    "expectedFacts": {"substitutionAllowed": false, "substituteProductId": null, "qualificationStatus": "not_requested"},
+    "requiredTerms": ["A false flag means no substitute may be offered"],
+    "policyIds": ["substitution"]
+  },
+  {
+    "id": "no-engineering-claim",
+    "recordId": "REC-CON-0006",
+    "question": "Can we describe the candidate as a safe approved equivalent?",
+    "expectedIntents": ["substitution", "audit"],
+    "expectedFacts": {"qualificationStatus": "human_review_required", "approvalRequired": true},
+    "requiredTerms": ["do not invent an engineering claim", "No substitute quantity is allocated"],
+    "policyIds": ["substitution"]
+  },
+  {
+    "id": "inbound-late-apartments",
+    "recordId": "REC-CON-0008",
+    "question": "Which part of the window commitment needs a revised delivery date?",
+    "expectedIntents": ["delivery", "escalation"],
+    "expectedFacts": {"orderedQty": 25, "allocatedQty": 10, "plannedInboundQty": 15, "shortageQty": 15, "inboundMeetsCommitment": false, "committedDateOffsetDays": 8, "inboundDateOffsetDays": 10},
+    "requiredTerms": ["customer acceptance of a revised date"],
+    "policyIds": ["delivery"]
+  },
+  {
+    "id": "inbound-office-proposal",
+    "recordId": "REC-CON-0009",
+    "question": "How could the later window delivery support the office?",
+    "expectedIntents": ["delivery"],
+    "expectedFacts": {"allocatedQty": 0, "plannedInboundQty": 20, "afterInboundShortageQty": 0, "inboundMeetsCommitment": true, "approvalRequired": true},
+    "requiredTerms": ["receipt", "transport confirmation and approval"],
+    "policyIds": ["delivery"]
+  },
+  {
+    "id": "inbound-conservation",
+    "recordId": "REC-CON-0007",
+    "question": "Are we allocating the same inbound windows to multiple customers?",
+    "expectedIntents": ["delivery", "arbitration"],
+    "expectedFacts": {"pool.availableQty": 40, "pool.orderedQty": 75, "pool.inboundQty": 35, "pool.plannedInboundQty": 35, "pool.shortageQty": 35},
+    "requiredTerms": ["0 / 15 / 20", "Inbound is not on-hand stock"],
+    "policyIds": ["delivery"]
+  },
+  {
+    "id": "informal-promise-conflict",
+    "recordId": "REC-CON-0003",
+    "question": "The owner promised full delivery. Which evidence conflicts with that?",
+    "expectedIntents": ["escalation", "allocation"],
+    "expectedFacts": {"informalPromiseConflict": true, "allocatedQty": 0, "orderedQty": 400},
+    "requiredTerms": ["informally promised all 400 m2", "0 m2", "Flag the conflict"],
+    "policyIds": ["escalation"]
+  },
+  {
+    "id": "golden-owners",
+    "recordId": "REC-CON-0002",
+    "question": "Who confirms supply, approves changes, and speaks to the account?",
+    "expectedIntents": ["owners", "escalation"],
+    "expectedFacts": {"owner": "account.owner.002@example.com", "supplyOwner": "supply.planner@example.com", "approvalOwner": "sales.manager@example.com"},
+    "requiredTerms": ["All collaborators are synthetic"],
+    "policyIds": ["escalation"]
+  },
+  {
+    "id": "customer-message-draft",
+    "recordId": "REC-CON-0003",
+    "question": "Draft a customer message without sending it or repeating the full-delivery promise.",
+    "expectedIntents": ["draft", "delivery", "escalation"],
+    "expectedFacts": {"approvalRequired": true, "allocationStatus": "proposal"},
+    "requiredTerms": ["draft-only pending supply confirmation and business-owner approval"],
+    "policyIds": ["delivery"]
+  },
+  {
+    "id": "deduplicated-exposure",
+    "recordId": "REC-CON-0001",
+    "question": "The graph returned each commitment twice. Should exposure double?",
+    "expectedIntents": ["arbitration", "audit"],
+    "expectedFacts": {"pool.unfilledValue": 12000, "pool.orderValue": 36000},
+    "requiredTerms": ["Deduplicate by commitment ID", "must not duplicate"],
+    "policyIds": ["arbitration"]
+  },
+  {
+    "id": "synthetic-provenance",
+    "recordId": "REC-CON-0012",
+    "question": "Are these collaboration notes from live Microsoft 365?",
+    "expectedIntents": ["provenance", "audit"],
+    "expectedFacts": {"sourceType": "synthetic", "synthetic": true},
+    "requiredTerms": ["simulated collaboration context", "not a live Microsoft 365 connection"],
+    "policyIds": ["audit"]
+  },
+  {
+    "id": "consent-independent-gate",
+    "recordId": "REC-CON-0010",
+    "question": "May we contact a denied-consent profile when supply improves?",
+    "expectedIntents": ["campaigns"],
+    "expectedFacts": {"consent.consent_status": "denied"},
+    "requiredTerms": ["A denied-consent profile remains suppressed even if stock becomes available"],
+    "policyIds": ["campaigns"]
+  },
+  {
+    "id": "loft-shared-pool",
+    "recordId": "REC-CON-0011",
+    "question": "How does the loft-insulation proposal affect the other two customers?",
+    "expectedIntents": ["allocation", "arbitration"],
+    "expectedFacts": {"allocatedQty": 150, "shortageQty": 100, "pool.availableQty": 500, "pool.orderedQty": 800, "pool.shortageQty": 300, "pool.customerCount": 3},
+    "policyIds": ["allocation", "arbitration"]
+  },
+  {
+    "id": "snapshot-and-currency",
+    "recordId": "REC-CON-0001",
+    "question": "Are the dates wall-clock dates and are these USD values relabelled as EUR?",
+    "expectedIntents": ["audit"],
+    "expectedFacts": {"currency": "EUR", "unitPrice": 20, "committedDateOffsetDays": 3},
+    "requiredTerms": ["Dates are offsets from that snapshot", "currency-neutral names", "not an exchange-rate conversion"],
+    "policyIds": ["audit"]
+  },
+  {
+    "id": "live-queue-provenance",
+    "recordId": "REC-CON-0001",
+    "question": "In live mode, may matching this record ID in the graph justify filling its quantities from local JSON?",
+    "expectedIntents": ["audit", "provenance"],
+    "requiredTerms": ["DemandRecord", "must not be enriched from local fixtures", "project these values directly from the graph", "Missing properties or failed retrieval must be reported explicitly"],
+    "policyIds": ["audit"]
+  }
+]

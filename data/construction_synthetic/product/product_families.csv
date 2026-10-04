@@ -1,0 +1,4 @@
+product_family_id,family_name,technology,lifecycle_state
+FAMILY-INSULATION,Insulation,Synthetic catalogue; suitability requires human qualification,active
+FAMILY-PLASTERBOARD,Plasterboard,Synthetic catalogue; suitability requires human qualification,active
+FAMILY-WINDOWS,Windows,Synthetic catalogue; suitability requires human qualification,active

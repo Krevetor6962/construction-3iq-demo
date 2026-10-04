@@ -1,0 +1,462 @@
+{
+  "verifiedAt": "2026-10-03T16:16:38.344964+00:00",
+  "sourceId": "<GRAPH_MODEL_ID>",
+  "validationScope": "Direct live GQL execution; no data-agent item was created or invoked",
+  "results": [
+    {
+      "id": "G1",
+      "language": "GQL",
+      "status": "passed",
+      "rowCount": 3,
+      "rows": [
+        {
+          "demandSignalId": "DEMAND-CON-001",
+          "productId": "PROD-CON-01",
+          "constraintId": "CONSTRAINT-CON-01",
+          "recordId": "REC-CON-0001",
+          "commitmentId": "COMMIT-CON-0001",
+          "accountName": "Synthetic Alder School Builders",
+          "projectName": "Synthetic Alder School Renovation",
+          "orderedQty": 800,
+          "proposedQty": 800,
+          "shortageQty": 0,
+          "unfilledValue": 0.0,
+          "currency": "EUR"
+        },
+        {
+          "demandSignalId": "DEMAND-CON-001",
+          "productId": "PROD-CON-01",
+          "constraintId": "CONSTRAINT-CON-01",
+          "recordId": "REC-CON-0002",
+          "commitmentId": "COMMIT-CON-0002",
+          "accountName": "Synthetic Birch Apartment Contractors",
+          "projectName": "Synthetic Birch Apartments",
+          "orderedQty": 600,
+          "proposedQty": 400,
+          "shortageQty": 200,
+          "unfilledValue": 4000.0,
+          "currency": "EUR"
+        },
+        {
+          "demandSignalId": "DEMAND-CON-001",
+          "productId": "PROD-CON-01",
+          "constraintId": "CONSTRAINT-CON-01",
+          "recordId": "REC-CON-0003",
+          "commitmentId": "COMMIT-CON-0003",
+          "accountName": "Synthetic Cedar Office Refurbishers",
+          "projectName": "Synthetic Cedar Office Refurbishment",
+          "orderedQty": 400,
+          "proposedQty": 0,
+          "shortageQty": 400,
+          "unfilledValue": 8000.0,
+          "currency": "EUR"
+        }
+      ]
+    },
+    {
+      "id": "G2",
+      "language": "GQL",
+      "status": "passed",
+      "rowCount": 2,
+      "rows": [
+        {
+          "startingProfile": "PROFILE-CON-001",
+          "audienceId": "AUDIENCE-CON-001",
+          "activationId": "ACTIVATION-CON-001",
+          "campaignId": "CAMPAIGN-CON-001",
+          "demandSignalId": "DEMAND-CON-001",
+          "productId": "PROD-CON-01",
+          "constraintId": "CONSTRAINT-CON-01",
+          "commitmentId": "COMMIT-CON-0002",
+          "orderId": "ORDER-CON-0002",
+          "otherAccountId": "ACC-CON-002",
+          "otherAccountName": "Synthetic Birch Apartment Contractors",
+          "shortageQty": 200
+        },
+        {
+          "startingProfile": "PROFILE-CON-001",
+          "audienceId": "AUDIENCE-CON-001",
+          "activationId": "ACTIVATION-CON-001",
+          "campaignId": "CAMPAIGN-CON-001",
+          "demandSignalId": "DEMAND-CON-001",
+          "productId": "PROD-CON-01",
+          "constraintId": "CONSTRAINT-CON-01",
+          "commitmentId": "COMMIT-CON-0003",
+          "orderId": "ORDER-CON-0003",
+          "otherAccountId": "ACC-CON-003",
+          "otherAccountName": "Synthetic Cedar Office Refurbishers",
+          "shortageQty": 400
+        }
+      ]
+    },
+    {
+      "id": "G3",
+      "language": "GQL",
+      "status": "passed",
+      "rowCount": 1,
+      "rows": [
+        {
+          "eventId": "ACTIVATION-EVENT-CON-010",
+          "loggedStatus": "suppressed",
+          "currentActivationStatus": "suppressed_consent",
+          "profileId": "PROFILE-CON-010",
+          "consentId": "CONSENT-CON-010",
+          "consentStatus": "denied",
+          "ruleId": "SUPPRESS-CON-010",
+          "accountName": "Synthetic Juniper Learning Builders",
+          "recordId": "REC-CON-0010",
+          "orderedQty": 350,
+          "proposedQty": 350,
+          "shortageQty": 0,
+          "approvalRequired": true
+        }
+      ]
+    },
+    {
+      "id": "G4",
+      "language": "GQL",
+      "status": "passed",
+      "rowCount": 24,
+      "rows": [
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0015",
+          "accountName": "Synthetic Construction Partner 015",
+          "projectName": "Synthetic School Renovation 015",
+          "orderedQty": 180,
+          "proposedQty": 180,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0023",
+          "accountName": "Synthetic Construction Partner 023",
+          "projectName": "Synthetic Office Refurbishment 023",
+          "orderedQty": 100,
+          "proposedQty": 100,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0031",
+          "accountName": "Synthetic Construction Partner 031",
+          "projectName": "Synthetic Apartments 031",
+          "orderedQty": 280,
+          "proposedQty": 0,
+          "shortageQty": 280
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0039",
+          "accountName": "Synthetic Construction Partner 039",
+          "projectName": "Synthetic School Renovation 039",
+          "orderedQty": 200,
+          "proposedQty": 200,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0047",
+          "accountName": "Synthetic Construction Partner 047",
+          "projectName": "Synthetic Office Refurbishment 047",
+          "orderedQty": 240,
+          "proposedQty": 240,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0055",
+          "accountName": "Synthetic Construction Partner 055",
+          "projectName": "Synthetic Apartments 055",
+          "orderedQty": 470,
+          "proposedQty": 0,
+          "shortageQty": 470
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0063",
+          "accountName": "Synthetic Construction Partner 063",
+          "projectName": "Synthetic School Renovation 063",
+          "orderedQty": 390,
+          "proposedQty": 310,
+          "shortageQty": 80
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0071",
+          "accountName": "Synthetic Construction Partner 071",
+          "projectName": "Synthetic Office Refurbishment 071",
+          "orderedQty": 420,
+          "proposedQty": 420,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0079",
+          "accountName": "Synthetic Construction Partner 079",
+          "projectName": "Synthetic Apartments 079",
+          "orderedQty": 250,
+          "proposedQty": 250,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0087",
+          "accountName": "Synthetic Construction Partner 087",
+          "projectName": "Synthetic School Renovation 087",
+          "orderedQty": 220,
+          "proposedQty": 0,
+          "shortageQty": 220
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0095",
+          "accountName": "Synthetic Construction Partner 095",
+          "projectName": "Synthetic Office Refurbishment 095",
+          "orderedQty": 500,
+          "proposedQty": 500,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0103",
+          "accountName": "Synthetic Cedar Office Refurbishers",
+          "projectName": "Synthetic Apartments 103",
+          "orderedQty": 220,
+          "proposedQty": 220,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0111",
+          "accountName": "Synthetic Kite Apartment Contractors",
+          "projectName": "Synthetic School Renovation 111",
+          "orderedQty": 370,
+          "proposedQty": 370,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0119",
+          "accountName": "Synthetic Construction Partner 019",
+          "projectName": "Synthetic Office Refurbishment 119",
+          "orderedQty": 130,
+          "proposedQty": 130,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0127",
+          "accountName": "Synthetic Construction Partner 027",
+          "projectName": "Synthetic Apartments 127",
+          "orderedQty": 130,
+          "proposedQty": 0,
+          "shortageQty": 130
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0135",
+          "accountName": "Synthetic Construction Partner 035",
+          "projectName": "Synthetic School Renovation 135",
+          "orderedQty": 150,
+          "proposedQty": 0,
+          "shortageQty": 150
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0143",
+          "accountName": "Synthetic Construction Partner 043",
+          "projectName": "Synthetic Office Refurbishment 143",
+          "orderedQty": 490,
+          "proposedQty": 490,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0151",
+          "accountName": "Synthetic Construction Partner 051",
+          "projectName": "Synthetic Apartments 151",
+          "orderedQty": 450,
+          "proposedQty": 0,
+          "shortageQty": 450
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0159",
+          "accountName": "Synthetic Construction Partner 059",
+          "projectName": "Synthetic School Renovation 159",
+          "orderedQty": 130,
+          "proposedQty": 0,
+          "shortageQty": 130
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0167",
+          "accountName": "Synthetic Construction Partner 067",
+          "projectName": "Synthetic Office Refurbishment 167",
+          "orderedQty": 190,
+          "proposedQty": 190,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0175",
+          "accountName": "Synthetic Construction Partner 075",
+          "projectName": "Synthetic Apartments 175",
+          "orderedQty": 190,
+          "proposedQty": 190,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0183",
+          "accountName": "Synthetic Construction Partner 083",
+          "projectName": "Synthetic School Renovation 183",
+          "orderedQty": 240,
+          "proposedQty": 240,
+          "shortageQty": 0
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0191",
+          "accountName": "Synthetic Construction Partner 091",
+          "projectName": "Synthetic Office Refurbishment 191",
+          "orderedQty": 120,
+          "proposedQty": 0,
+          "shortageQty": 120
+        },
+        {
+          "inventoryId": "INV-CON-06",
+          "sharedFreeStock": 4030,
+          "unit": "m2",
+          "constraintId": "CONSTRAINT-CON-06",
+          "commitmentId": "COMMIT-CON-0199",
+          "accountName": "Synthetic Construction Partner 099",
+          "projectName": "Synthetic Apartments 199",
+          "orderedQty": 140,
+          "proposedQty": 0,
+          "shortageQty": 140
+        }
+      ]
+    },
+    {
+      "id": "G5",
+      "language": "GQL",
+      "status": "passed",
+      "rowCount": 3,
+      "rows": [
+        {
+          "recordId": "REC-CON-0007",
+          "accountName": "Synthetic Grove School Contractors",
+          "committedDate": "2026-10-06T00:00:00Z",
+          "currentShortage": 0,
+          "inboundId": "INBOUND-CON-09",
+          "sharedInboundQty": 35,
+          "inboundDate": "2026-10-12T00:00:00Z",
+          "inboundConfirmed": true,
+          "plannedShare": 0,
+          "afterInboundShortage": 0,
+          "inboundMeetsCommitment": false,
+          "approvalRequired": true
+        },
+        {
+          "recordId": "REC-CON-0008",
+          "accountName": "Synthetic Harbor Residential Builders",
+          "committedDate": "2026-10-10T00:00:00Z",
+          "currentShortage": 15,
+          "inboundId": "INBOUND-CON-09",
+          "sharedInboundQty": 35,
+          "inboundDate": "2026-10-12T00:00:00Z",
+          "inboundConfirmed": true,
+          "plannedShare": 15,
+          "afterInboundShortage": 0,
+          "inboundMeetsCommitment": false,
+          "approvalRequired": true
+        },
+        {
+          "recordId": "REC-CON-0009",
+          "accountName": "Synthetic Iris Office Contractors",
+          "committedDate": "2026-10-14T00:00:00Z",
+          "currentShortage": 20,
+          "inboundId": "INBOUND-CON-09",
+          "sharedInboundQty": 35,
+          "inboundDate": "2026-10-12T00:00:00Z",
+          "inboundConfirmed": true,
+          "plannedShare": 20,
+          "afterInboundShortage": 0,
+          "inboundMeetsCommitment": true,
+          "approvalRequired": true
+        }
+      ]
+    }
+  ]
+}

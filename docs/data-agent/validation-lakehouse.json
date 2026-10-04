@@ -1,0 +1,86 @@
+{
+    "verifiedAt":  "2026-10-03T16:15:55.6065582Z",
+    "sourceId":  "<LAKEHOUSE_ID>",
+    "validationScope":  "Direct live Lakehouse SQL execution; no data-agent item was created or invoked",
+    "results":  [
+                    {
+                        "id":  "S1",
+                        "language":  "T-SQL",
+                        "status":  "passed",
+                        "rowCount":  1,
+                        "rows":  [
+                                     {
+                                         "cluster_id":  "POOL-CON-01",
+                                         "product_id":  "PROD-CON-01",
+                                         "commitment_count":  3,
+                                         "ordered_qty":  1800,
+                                         "free_stock":  1200,
+                                         "proposed_qty":  1200,
+                                         "shortage_qty":  600,
+                                         "order_value":  36000.00,
+                                         "unfilled_value":  12000.00,
+                                         "unit":  "m2",
+                                         "currency":  "EUR",
+                                         "snapshot_date":  "2026-10-02T00:00:00"
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "S2",
+                        "language":  "T-SQL",
+                        "status":  "passed",
+                        "rowCount":  2,
+                        "rows":  [
+                                     {
+                                         "activation_status":  "held_supply",
+                                         "consent_status":  "granted",
+                                         "activation_profile_pairs":  90
+                                     },
+                                     {
+                                         "activation_status":  "suppressed_consent",
+                                         "consent_status":  "denied",
+                                         "activation_profile_pairs":  10
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "S3",
+                        "language":  "T-SQL",
+                        "status":  "passed",
+                        "rowCount":  1,
+                        "rows":  [
+                                     {
+                                         "cluster_id":  "POOL-CON-01",
+                                         "unit":  "m2",
+                                         "current_ordered_qty":  1800,
+                                         "unchanged_free_stock":  1200,
+                                         "hypothetical_extra_qty":  300,
+                                         "hypothetical_total_qty":  2100,
+                                         "hypothetical_gap":  900
+                                     }
+                                 ]
+                    },
+                    {
+                        "id":  "S4",
+                        "language":  "T-SQL",
+                        "status":  "passed",
+                        "rowCount":  1,
+                        "rows":  [
+                                     {
+                                         "record_id":  "REC-CON-0005",
+                                         "substitution_allowed":  true,
+                                         "substitute_product_id":  "PROD-CON-06",
+                                         "qualification_status":  "human_review_required",
+                                         "approval_required":  true,
+                                         "candidate_pool":  "POOL-CON-06",
+                                         "existing_commitments":  24,
+                                         "candidate_ordered_qty":  6200,
+                                         "candidate_free_stock":  4030,
+                                         "candidate_proposed_qty":  4030,
+                                         "candidate_shortage_qty":  2170,
+                                         "unit":  "m2"
+                                     }
+                                 ]
+                    }
+                ]
+}

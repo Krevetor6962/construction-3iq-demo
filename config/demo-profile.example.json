@@ -1,0 +1,15 @@
+{
+  "displayName": "Construction Supply Command Center",
+  "supplierName": "BuildTogether Materials",
+  "currency": "EUR",
+  "seed": 42,
+  "asOfDate": "2026-10-02",
+  "workspaceName": "Construction 3IQ Demo",
+  "resourceGroup": "rg-construction-3iq-demo",
+  "subscriptionId": "00000000-0000-0000-0000-000000000000",
+  "tenantId": "00000000-0000-0000-0000-000000000000",
+  "capacityId": "00000000-0000-0000-0000-000000000000",
+  "azureRegion": "westus3",
+  "foundryRegion": "eastus2",
+  "fabricEvidenceMode": "ontology_graph"
+}

@@ -1,0 +1,13 @@
+constraint_id,product_id,product_family_id,constraint_type,severity,start_date,end_date,cluster_id,description
+CONSTRAINT-CON-01,PROD-CON-01,FAMILY-INSULATION,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-01,Shared free stock is already net of other reservations. Inbound is not on-hand stock.
+CONSTRAINT-CON-02,PROD-CON-02,FAMILY-INSULATION,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-02,Shared free stock is already net of other reservations. Inbound is not on-hand stock.
+CONSTRAINT-CON-03,PROD-CON-03,FAMILY-INSULATION,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-03,Shared free stock is already net of other reservations. Inbound is not on-hand stock.
+CONSTRAINT-CON-04,PROD-CON-04,FAMILY-INSULATION,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-04,Shared free stock is already net of other reservations. Inbound is not on-hand stock.
+CONSTRAINT-CON-05,PROD-CON-05,FAMILY-PLASTERBOARD,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-05,Shared free stock is already net of other reservations. Inbound is not on-hand stock.
+CONSTRAINT-CON-06,PROD-CON-06,FAMILY-PLASTERBOARD,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-06,Shared free stock is already net of other reservations. Inbound is not on-hand stock.
+CONSTRAINT-CON-07,PROD-CON-07,FAMILY-PLASTERBOARD,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-07,Shared free stock is already net of other reservations. Inbound is not on-hand stock.
+CONSTRAINT-CON-08,PROD-CON-08,FAMILY-PLASTERBOARD,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-08,Shared free stock is already net of other reservations. Inbound is not on-hand stock.
+CONSTRAINT-CON-09,PROD-CON-09,FAMILY-WINDOWS,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-09,Shared free stock is already net of other reservations. Inbound is not on-hand stock.
+CONSTRAINT-CON-10,PROD-CON-10,FAMILY-WINDOWS,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-10,Shared free stock is already net of other reservations. Inbound is not on-hand stock.
+CONSTRAINT-CON-11,PROD-CON-11,FAMILY-WINDOWS,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-11,Shared free stock is already net of other reservations. Inbound is not on-hand stock.
+CONSTRAINT-CON-12,PROD-CON-12,FAMILY-WINDOWS,shared_stock,high,2026-10-01,2026-11-16,POOL-CON-12,Shared free stock is already net of other reservations. Inbound is not on-hand stock.

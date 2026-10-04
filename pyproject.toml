@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "construction-three-iq"
+version = "0.1.0"
+description = "Synthetic construction demand-to-supply demonstration with three evidence lanes"
+requires-python = ">=3.11"
+dependencies = [
+    "agent-framework-core==1.2.2",
+    "azure-identity>=1.25,<2",
+    "azure-ai-projects==2.7.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
